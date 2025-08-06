@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalihPortfolio | IT Student</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyberblue: '#00f0ff',
+                        cyberpink: '#ff00aa',
+                        cyberpurple: '#bd00ff',
+                        darkbg: '#0a0a12',
+                        darkcard: '#151521',
+                    },
+                    fontFamily: {
+                        'cyber': ['"Rajdhani"', 'sans-serif'],
+                    },
+                    animation: {
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'text-glow': 'text-glow 1.5s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        'glow': {
+                            '0%, 100%': { 'box-shadow': '0 0 5px #00f0ff' },
+                            '50%': { 'box-shadow': '0 0 20px #00f0ff, 0 0 30px #bd00ff' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'text-glow': {
+                            '0%': { 'text-shadow': '0 0 5px #00f0ff' },
+                            '100%': { 'text-shadow': '0 0 10px #00f0ff, 0 0 20px #bd00ff' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-border {
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            position: relative;
+        }
+        
+        .cyber-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #00f0ff, #bd00ff) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        .cyber-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .cyber-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.4);
+        }
+        
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            transition: all 0.5s;
+        }
+        
+        .cyber-btn:hover::before {
+            left: 100%;
+        }
+        
+        .skill-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00f0ff, #bd00ff);
+            border-radius: 3px;
+            transition: width 1.5s ease;
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #00f0ff, #bd00ff);
+        }
+        
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00f0ff, #bd00ff);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dark-mode .gradient-text {
+            background: linear-gradient(90deg, #00f0ff, #bd00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .light-mode .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Light mode specific styles */
+        .light-mode {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .light-mode .bg-darkcard {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .light-mode .cyber-border {
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .light-mode .cyber-border::before {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6) border-box;
+        }
+        
+        .light-mode .skill-progress {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        }
+        
+        .light-mode .timeline::before {
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+        
+        .light-mode .timeline-dot {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+        }
+        
+        .light-mode .cyber-btn:hover {
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .light-mode .cyber-btn::before {
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-gray-300 dark-mode">
+    <!-- Navigation -->
+    <nav class="bg-darkcard border-b border-gray-800 sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <i class="fas fa-terminal text-cyberblue text-xl mr-2"></i>
+                        <span class="text-xl font-bold gradient-text">GalihPortofolio</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#about" class="hover:text-cyberblue transition">About</a>
+                    <a href="#skills" class="hover:text-cyberblue transition">Skills</a>
+                    <a href="#projects" class="hover:text-cyberblue transition">Projects</a>
+                    <a href="#education" class="hover:text-cyberblue transition">Education</a>
+                    <a href="#contact" class="hover:text-cyberblue transition">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-800 transition">
+                        <i class="fas fa-sun text-cyberblue"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="p-2 rounded-md hover:bg-gray-800 focus:outline-none">
+                        <i class="fas fa-bars text-cyberblue"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-darkcard border-t border-gray-800 transition-all duration-300">
+            <div class="px-2 pt-2 pb-3 space-y-2">
+                <a href="#about" class="block px-3 py-2 rounded-md hover:bg-gray-800 hover:text-cyberblue">About</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md hover:bg-gray-800 hover:text-cyberblue">Skills</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md hover:bg-gray-800 hover:text-cyberblue">Projects</a>
+                <a href="#education" class="block px-3 py-2 rounded-md hover:bg-gray-800 hover:text-cyberblue">Education</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md hover:bg-gray-800 hover:text-cyberblue">Contact</a>
+                <button id="theme-toggle-mobile" class="block w-full text-left px-3 py-2 rounded-md hover:bg-gray-800 hover:text-cyberblue">
+                    Toggle Theme
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        Hi, Saya <span class="gradient-text">Galih Dian Permana Kusuma</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl mb-8">
+                        <span class="inline-block mr-2">I'm an</span>
+                        <span class="font-medium text-cyberblue" id="typewriter"></span>
+                    </h2>
+                    <p class="text-lg mb-8 max-w-lg">
+                        Passionate IT student specializing in Arduino,ESP32, Backend Developer & Embedded system. 
+                        Building digital solutions for tomorrow's challenges.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="bg-cyberblue hover:bg-cyberpurple text-darkbg px-6 py-3 rounded-lg font-bold transition cyber-btn">
+                            Contact Me
+                        </a>
+                        <a href="#projects" class="border border-cyberblue text-cyberblue hover:bg-gray-800 px-6 py-3 rounded-lg font-bold transition cyber-btn">
+                            View Projects
+                        </a>
+                    </div>
+                    <div class="mt-8 flex space-x-4">
+                        <a href="https://www.linkedin.com/in/galih-dian-permana-kusuma-25885a2b3/" class="hover:text-cyberblue transition" title="LinkedIn">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="https://github.com/GalihDianPK" class="hover:text-cyberblue transition" title="GitHub">
+                            <i class="fab fa-github text-2xl"></i>
+                        </a>
+                        <a href="https://www.instagram.com/gdpk_16/" class="hover:text-cyberblue transition" title="Instagram">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@galihdiann" class="hover:text-cyberblue transition" title="Tiktok">
+                            <i class="fab fa-tiktok text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center relative">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 bg-cyberblue rounded-full absolute -top-10 -left-10 opacity-20"></div>
+                        <div class="w-64 h-64 md:w-80 md:h-80 bg-cyberpink rounded-full absolute -bottom-10 -right-10 opacity-20"></div>
+                        <div class="relative z-10 w-64 h-64 md:w-80 md:h-80 overflow-hidden rounded-lg cyber-border floating">
+                            <img src="d:\GALIH_DIAN\Foto Galih\Foto_edit2.jpg" 
+                                 alt="Profile" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-darkcard">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">About Me</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-cyberblue to-cyberpurple mx-auto mb-6"></div>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Kenali lebih dalam siapa saya dan apa yang saya kerjakan
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 bg-cyberblue rounded-full absolute -top-5 -left-5 opacity-20"></div>
+                        <div class="relative z-10 w-64 h-64 overflow-hidden rounded-lg cyber-border">
+                            <img src="d:\GALIH_DIAN\Foto Galih\HUT Himatekkom  .(123).JPG" 
+                                 alt="About Me" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-2/3">
+                    <h3 class="text-2xl font-semibold mb-6 text-cyberblue">Who am I?</h3>
+                    <p class="mb-6">
+                        Saya adalah mahasiswa IT yang antusias dan berdedikasi, dengan fokus pada pengembangan perangkat lunak, IOT, dan sistem embedded. Saat ini saya sedang menempuh pendidikan di Universitas Gunadarma, dan terus mengembangkan kemampuan saya dalam bidang pemrograman, perancangan sistem, serta Pengelolaan Database.
+                    </p>
+                    <p class="mb-6">
+                        Saya menyukai tantangan dalam menyelesaikan masalah melalui teknologi. Mulai dari membangun aplikasi berbasis Java, membuat sistem web interaktif, hingga eksplorasi hardware menggunakan Arduino,esp32. Saya menikmati proses mengubah ide menjadi solusi digital yang nyata. Saya percaya bahwa belajar adalah proses seumur hidup dan selalu berusaha mengikuti perkembangan teknologi terkini untuk terus berkembang.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-cyberblue mr-2"></i>
+                            <span>Problem Solver</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-cyberblue mr-2"></i>
+                            <span>Fast Learner</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-cyberblue mr-2"></i>
+                            <span>Programming Enthusiast</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-cyberblue mr-2"></i>
+                            <span>Team Player</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="bg-cyberblue hover:bg-cyberpurple text-darkbg px-6 py-3 rounded-lg font-bold transition cyber-btn">
+                            Download CV
+                        </a>
+                        <a href="#contact" class="border border-cyberblue text-cyberblue hover:bg-gray-800 px-6 py-3 rounded-lg font-bold transition cyber-btn">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-darkbg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">My Skills</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-cyberblue to-cyberpurple mx-auto mb-6"></div>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Bahasa Pemrograman yang sedang saya tekuni dan explore lebih jauh!
+                </p>
+            </div>
+            
+                
+               <!-- Professional Skills -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- C++ -->
+                    <div class="p-4 bg-darkcard rounded-lg shadow-lg">
+                        <i class="fab fa-cuttlefish text-blue-500 text-3xl"></i>
+                        <h4 class="mt-2 text-xl font-semibold">C++</h4>
+                        <p class="text-sm">Mengembangkan aplikasi berbasis OOP, algoritma, dan pemrograman sistem.</p>
+                    </div>
+                    
+                    <!-- Java -->
+                    <div class="p-4 bg-darkcard rounded-lg shadow-lg">
+                        <i class="fab fa-java text-red-500 text-3xl"></i>
+                        <h4 class="mt-2 text-xl font-semibold">Java</h4>
+                        <p class="text-sm">Pemahaman OOP, pengembangan aplikasi dengan Spring Boot, dan Android.</p>
+                    </div>
+
+                    <!-- Python -->
+                    <div class="p-4 bg-darkcard rounded-lg shadow-lg">
+                        <i class="fab fa-python text-green-400 text-3xl"></i>
+                        <h4 class="mt-2 text-xl font-semibold">Python</h4>
+                        <p class="text-sm">Machine Learning, Data Science, dan pemrosesan otomatisasi tugas.</p>
+                    </div>
+
+                    <!-- Editing CapCut -->
+                    <div class="p-4 bg-darkcard rounded-lg shadow-lg">
+                        <i class="fas fa-film text-yellow-500 text-3xl"></i>
+                        <h4 class="mt-2 text-xl font-semibold">Editing CapCut</h4>
+                        <p class="text-sm">Pengeditan video dengan efek sinematik dan transisi profesional.</p>
+                    </div>
+
+                    <!-- Arduino -->
+                    <div class="p-4 bg-darkcard rounded-lg shadow-lg">
+                        <i class="fas fa-microchip text-gray-300 text-3xl"></i>
+                        <h4 class="mt-2 text-xl font-semibold">Arduino</h4>
+                        <p class="text-sm">Pemrograman mikrokontroler dan pengembangan sistem IoT.</p>
+                    </div>
+
+                    <!-- ESP32 -->
+                    <div class="p-4 bg-darkcard rounded-lg shadow-lg">
+                        <i class="fas fa-wifi text-blue-400 text-3xl"></i>
+                        <h4 class="mt-2 text-xl font-semibold">ESP32</h4>
+                        <p class="text-sm">Pengembangan proyek berbasis IoT dengan ESP-IDF dan MicroPython.</p>
+                    </div>
+                </div>
+
+            
+            
+            <!-- Tools & Technologies -->
+            <div class="mt-12 bg-darkcard p-8 rounded-lg cyber-border">
+                <h3 class="text-2xl font-semibold mb-6 text-cyberblue flex items-center">
+                    <i class="fas fa-tools mr-3"></i> Tools & Technologies
+                </h3>
+                <div class="flex flex-wrap gap-4">
+                    <!-- C++ -->
+                    <div class="flex items-center px-4 py-2 bg-gray-800 rounded-full">
+                        <i class="fab fa-cuttlefish text-blue-500 mr-2"></i>
+                        <span>C++</span>
+                    </div>
+
+                    <!-- Java -->
+                    <div class="flex items-center px-4 py-2 bg-gray-800 rounded-full">
+                        <i class="fab fa-java text-red-500 mr-2"></i>
+                        <span>Java</span>
+                    </div>
+
+                    <!-- Python -->
+                    <div class="flex items-center px-4 py-2 bg-gray-800 rounded-full">
+                        <i class="fab fa-python text-green-400 mr-2"></i>
+                        <span>Python</span>
+                    </div>
+
+                    <!-- CapCut Editing -->
+                    <div class="flex items-center px-4 py-2 bg-gray-800 rounded-full">
+                        <i class="fas fa-film text-yellow-500 mr-2"></i>
+                        <span>CapCut</span>
+                    </div>
+
+                    <!-- Arduino -->
+                    <div class="flex items-center px-4 py-2 bg-gray-800 rounded-full">
+                        <i class="fas fa-microchip text-gray-300 mr-2"></i>
+                        <span>Arduino</span>
+                    </div>
+
+                    <!-- ESP32 -->
+                    <div class="flex items-center px-4 py-2 bg-gray-800 rounded-full">
+                        <i class="fas fa-wifi text-blue-400 mr-2"></i>
+                        <span>ESP32</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-darkcard">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">My Projects</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-cyberblue to-cyberpurple mx-auto mb-6"></div>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Kumpulan proyek yang telah saya selesaikan maupun yang sedang saya kerjakan
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-darkbg rounded-lg overflow-hidden project-card cyber-border">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" 
+                             alt="Project 1" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-xl font-bold text-white">Back-end Development</h3>
+                            <p class="text-cyberblue">Menu sistem antarmuka ATM</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="mb-4">
+                            Sebuah sistem simulasi transaksi perbankan berbasis Python yang memungkinkan pengguna melakukan transfer dana, pembayaran tagihan, pembelian pulsa, penarikan tunai, serta pengecekan saldo dengan mekanisme yang aman dan terstruktur.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Python</span> <!--kalo mau nambah salin aja-->
+                        </div>
+                        <div class="mt-6 flex justify-between">
+                            <a href="#" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> On-going
+                            </a>
+                            <a href="https://github.com/GalihDianPK/Phython-Project" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fab fa-github mr-2"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="bg-darkbg rounded-lg overflow-hidden project-card cyber-border">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://plus.unsplash.com/premium_photo-1726754457459-d2dfa2e3a434?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                             alt="Project 2" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-xl font-bold text-white">Terminal Application</h3>
+                            <p class="text-cyberblue">Sistem kasir & Kalkulator</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="mb-4">
+                            Aplikasi Sistem kasir dan Kalkulator sederhana yang efisien berbasis command-line, memungkinkan pengguna untuk menambahkan, melihat, menandai, dan menghapus tugas langsung. Dan melakukan pengoperasian Matematika sederhana melalui antarmuka terminal
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Java</span>
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">C++</span>
+                        </div>
+                        <div class="mt-6 flex justify-between">
+                            <a href="#" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Finish
+                            </a>
+                            <a href="https://github.com/GalihDianPK/InteractiveJavaGames" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fab fa-github mr-2"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="bg-darkbg rounded-lg overflow-hidden project-card cyber-border">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://plus.unsplash.com/premium_photo-1685086785077-ff65bf749544?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Deskripsi Gambar" /> 
+                             alt="Project 3" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-xl font-bold text-white">Management App</h3>
+                            <p class="text-cyberblue">To-Do-List CLI App</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="mb-4">
+                            Aplikasi To-do List berbasis CLI (Java) untuk mencatat, menampilkan, dan mengedit daftar tugas secara interaktif, lengkap dengan validasi input dan simulasi loading. Cocok digunakan untuk mencatat tugas harian sederhana lewat terminal.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Java</span>
+                        </div>
+                        <div class="mt-6 flex justify-between">
+                            <a href="#" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> On-going
+                            </a>
+                            <a href="https://github.com/GalihDianPK/To-do-list-Java/blob/main/To_do_list.java" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fab fa-github mr-2"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="bg-darkbg rounded-lg overflow-hidden project-card cyber-border">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://media.licdn.com/dms/image/v2/D4E22AQH5eMmCqoaVvA/feedshare-shrink_800/B4EZWtP6ozHUAg-/0/1742368391116?e=1748476800&v=beta&t=JY-LzLmFQGGDk4cnq7E88bgtWlfiflL-PVYRGXTACWQ" 
+                             alt="Project 4" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-xl font-bold text-white">Arduino & ESP32 Automation Projects</h3>
+                            <p class="text-cyberblue">Penjemur Ikan asin Otomatis, Mobil Line follower, Sistem lampu Lalu lintas</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="mb-4">
+                            Sebuah sistem otomasi berbasis Arduino dan ESP32 yang mencakup tiga inovasi utama: penjemuran ikan asin otomatis, mobil line follower, dan sistem lampu lalu lintas cerdas. Dengan memanfaatkan sensor dan pemrograman berbasis IoT.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Arduino uno</span>
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">C++</span>
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">ESP-32</span>
+                        </div>
+                        <div class="mt-6 flex justify-between">
+                            <a href="#" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> On-Process
+                            </a>
+                            <a href="https://github.com/GalihDianPK/Arduino-Project" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fab fa-github mr-2"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Project 5-->
+                 <div class="bg-darkbg rounded-lg overflow-hidden project-card cyber-border">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"  
+                        alt="Game Development" 
+                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-xl font-bold text-white">Game Development</h3>
+                            <p class="text-cyberblue">Calculator, Guessing games, Space building games, & Tic-tac-toe</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="mb-4">
+                            Sebuah koleksi game berbasis Java, C++, dan Python, menampilkan kalkulator, tebak angka, simulasi Membuat bentuk bangun ruang, dan AI Tic-Tac-Toe.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Python</span>
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">C++</span>
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Java</span>
+                        </div>
+                        <div class="mt-6 flex justify-between">
+                            <a href="#" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> Finish
+                            </a>
+                            <a href="https://github.com/GalihDianPK" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fab fa-github mr-2"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Project 6 -->
+                 <div class="bg-darkbg rounded-lg overflow-hidden project-card cyber-border">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="https://images.unsplash.com/photo-1607706189992-eae578626c86?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"  
+                        alt="Game Development" 
+                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-xl font-bold text-white">Contact Manager</h3>
+                            <p class="text-cyberblue">Manajemen Kontak CLI App</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="mb-4">
+                            Menambahkan, menampilkan, dan menghapus kontak interaktif melalui terminal
+                            Sebuah aplikasi berbasis Java untuk mencatat data kontak seperti nama, nomor, dan email. Dilengkapi fitur validasi input dan konfirmasi interaktif, cocok untuk manajemen kontak sederhana di terminal.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-800 text-cyberblue text-xs px-3 py-1 rounded-full">Java</span>
+                        </div>
+                        <div class="mt-6 flex justify-between">
+                            <a href="#" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i> On-going
+                            </a>
+                            <a href="https://github.com/GalihDianPK/Aplikasi_Manajemen_Kontak" class="text-cyberblue hover:underline flex items-center">
+                                <i class="fab fa-github mr-2"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-bold rounded-md text-darkbg bg-cyberblue hover:bg-cyberpurple transition cyber-btn">
+                    View All Projects
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-darkbg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Education & Experience</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-cyberblue to-cyberpurple mx-auto mb-6"></div>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Background akademi dan perjalanan pendidikan
+                </p>
+            </div>
+            
+            <div class="relative timeline">
+                <!-- Education 1 -->
+                <div class="relative flex flex-col md:flex-row items-center mb-16">
+                    <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
+                        <h3 class="text-xl font-semibold mb-2">Member GDGOCUG</h3>
+                        <p class="text-cyberblue mb-2">Universitas Gunadarma</p>
+                        <p class="text-gray-400">2024 - Present</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <p>
+                            Aktif mengikuti seminar dan workshop teknologi serta mengerjakan berbagai tugas untuk
+                            meningkatkan keterampilan dan pemahaman di bidang teknologi.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Experience 1 -->
+                <div class="relative flex flex-col md:flex-row items-center mb-16">
+                    <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
+                        <h3 class="text-xl font-semibold mb-2">Mahasiswa D3-Teknik Komputer</h3>
+                        <p class="text-cyberblue mb-2">Universitas Gunadarma</p>
+                        <p class="text-gray-400">2024 - Present</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <p>
+                            Menempuh pendidikan di bidang Teknik Komputer dengan fokus pada pengembangan perangkat lunak dan sistem jaringan. Terlibat dalam proyek pembuatan website responsif dan kolaborasi tim UI/UX serta backend development.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Education 2 -->
+                <div class="relative flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right">
+                        <h3 class="text-xl font-semibold mb-2">Ketua Osis 1</h3>
+                        <p class="text-cyberblue mb-2">SMAN 1 CITEUREUP</p>
+                        <p class="text-gray-400">2021 - 2024</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <p>
+                            Memimpin organisasi siswa intra sekolah, mengkoordinasikan berbagai kegiatan sekolah, serta mengembangkan kemampuan komunikasi, kepemimpinan, dan manajemen waktu. Lulus dengan prestasi akademik dan pengalaman organisasi yang kuat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-darkcard">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Get In Touch</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-cyberblue to-cyberpurple mx-auto mb-6"></div>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Punya projek atau ide yang ingin dikolaborasikan? langsung hubungi data dibawah kita gasss!!
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium mb-1">Name</label>
+                            <input type="text" id="name" name="name" class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-cyberblue">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                            <input type="email" id="email" name="email" class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-cyberblue">
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-cyberblue">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-cyberblue"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-darkbg bg-cyberblue hover:bg-cyberpurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyberblue transition cyber-btn">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-darkbg p-8 rounded-lg h-full cyber-border">
+                        <h3 class="text-xl font-semibold mb-6 text-cyberblue">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-cyberblue text-xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium">Location</p>
+                                    <p class="text-gray-400">Bogor, Indonesia</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-envelope text-cyberblue text-xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium">Email</p>
+                                    <p class="text-gray-400">galihdpk0204@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-phone-alt text-cyberblue text-xl"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium">Phone</p>
+                                    <p class="text-gray-400">+6288292145222</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-10 mb-6 text-cyberblue">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://www.linkedin.com/in/galih-dian-permana-kusuma-25885a2b3/" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-cyberblue hover:bg-cyberblue hover:text-darkbg transition" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/GalihDianPK" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-cyberblue hover:bg-cyberblue hover:text-darkbg transition" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.instagram.com/gdpk_16/" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-cyberblue hover:bg-cyberblue hover:text-darkbg transition" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@galihdiann" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-cyberblue hover:bg-cyberblue hover:text-darkbg transition" title="Twitter">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darkbg border-t border-gray-800 pt-12 pb-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex items-center mb-6 md:mb-0">
+                    <i class="fas fa-terminal text-cyberblue text-xl mr-2"></i>
+                    <span class="text-xl font-bold gradient-text">CyberPortfolio</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#about" class="text-gray-400 hover:text-cyberblue transition">About</a>
+                    <a href="#skills" class="text-gray-400 hover:text-cyberblue transition">Skills</a>
+                    <a href="#projects" class="text-gray-400 hover:text-cyberblue transition">Projects</a>
+                    <a href="#contact" class="text-gray-400 hover:text-cyberblue transition">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2025 GalihPortfolio. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="https://www.linkedin.com/in/galih-dian-permana-kusuma-25885a2b3/" class="text-gray-400 hover:text-cyberblue transition" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/GalihDianPK" class="text-gray-400 hover:text-cyberblue transition" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.instagram.com/gdpk_16/" class="text-gray-400 hover:text-cyberblue transition" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@galihdiann" class="text-gray-400 hover:text-cyberblue transition" title="Twitter">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Dark/light mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const html = document.documentElement;
+        
+        function toggleTheme() {
+            html.classList.toggle('light-mode');
+            localStorage.setItem('lightMode', html.classList.contains('light-mode'));
+            
+            // Update icon
+            const icon = themeToggle.querySelector('i');
+            if (html.classList.contains('light-mode')) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('lightMode') === 'true') {
+            html.classList.add('light-mode');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+
+        // Typewriter effect
+        const typewriterElement = document.getElementById('typewriter');
+        const professions = ['IT Student', 'Web Developer', 'Programmer', 'Tech Enthusiast'];
+        let professionIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeWriter() {
+            const currentProfession = professions[professionIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentProfession.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                typewriterElement.textContent = currentProfession.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentProfession.length) {
+                isDeleting = true;
+                typingSpeed = 1500; // Pause at end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                professionIndex = (professionIndex + 1) % professions.length;
+                typingSpeed = 500; // Pause before typing next
+            }
+            
+            setTimeout(typeWriter, typingSpeed);
+        }
+        
+        // Start the typewriter effect
+        setTimeout(typeWriter, 1000);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Animate skill bars on scroll
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            const skillsSection = document.getElementById('skills');
+            const skillsPosition = skillsSection.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (skillsPosition < screenPosition) {
+                skillBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+                
+                // Remove event listener after animation
+                window.removeEventListener('scroll', animateSkillBars);
+            }
+        };
+        
+        window.addEventListener('scroll', animateSkillBars);
+    </script>
+</body>
+</html>
